@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "adminUsername1": {
+    "adminUsername": {
       "type": "string",
       "metadata": {
         "description": "Username for the Virtual Machine."
@@ -105,7 +105,8 @@
       "apiVersion": "2018-11-01",
       "name": "[variables('nicName')]",
       "location": "[parameters('location')]",
-      "dependsOn": [        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
       ],
       "properties": {
@@ -136,18 +137,18 @@
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "Standard_A2"
+          "vmSize": "Basic_A0"
         },
         "osProfile": {
           "computerName": "[variables('vmName')]",
-          "adminUsername": "[parameters('adminUsername1')]",
+          "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
           "imageReference": {
-            "publisher": "MicrosoftSharepoint",
-            "offer": "MicrosoftSharePointServer",
-            "sku": "2013",
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "18.04-LTS",
             "version": "latest"
           },
           "osDisk": {
@@ -155,7 +156,7 @@
           },
           "dataDisks": [
             {
-              "diskSizeGB": 2047,
+              "diskSizeGB": 1023,
               "lun": 0,
               "createOption": "Empty"
             }
